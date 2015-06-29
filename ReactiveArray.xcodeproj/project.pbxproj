@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		9DF1E5401B41E438007A6182 /* ReactiveArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 9DF1E53F1B41E438007A6182 /* ReactiveArray.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9DF1E5461B41E438007A6182 /* ReactiveArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E53A1B41E438007A6182 /* ReactiveArray.framework */; };
-		9DF1E54D1B41E438007A6182 /* ReactiveArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E54C1B41E438007A6182 /* ReactiveArrayTests.swift */; };
+		9DF1E54D1B41E438007A6182 /* ReactiveArraySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E54C1B41E438007A6182 /* ReactiveArraySpec.swift */; };
 		9DF1E5571B41E4A2007A6182 /* ReactiveArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E5561B41E4A2007A6182 /* ReactiveArray.swift */; };
 		9DF1E55E1B41E6D1007A6182 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55B1B41E6D1007A6182 /* Box.framework */; };
 		9DF1E55F1B41E6D1007A6182 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */; };
@@ -17,6 +17,8 @@
 		9DF1E5611B41E6E1007A6182 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55B1B41E6D1007A6182 /* Box.framework */; };
 		9DF1E5621B41E6E1007A6182 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */; };
 		9DF1E5631B41E6E1007A6182 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55D1B41E6D1007A6182 /* Result.framework */; };
+		9DF1E5661B41F937007A6182 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E5641B41F937007A6182 /* Nimble.framework */; };
+		9DF1E5671B41F937007A6182 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E5651B41F937007A6182 /* Quick.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,11 +37,13 @@
 		9DF1E53F1B41E438007A6182 /* ReactiveArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReactiveArray.h; sourceTree = "<group>"; };
 		9DF1E5451B41E438007A6182 /* ReactiveArrayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactiveArrayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DF1E54B1B41E438007A6182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9DF1E54C1B41E438007A6182 /* ReactiveArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveArrayTests.swift; sourceTree = "<group>"; };
+		9DF1E54C1B41E438007A6182 /* ReactiveArraySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveArraySpec.swift; sourceTree = "<group>"; };
 		9DF1E5561B41E4A2007A6182 /* ReactiveArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveArray.swift; sourceTree = "<group>"; };
 		9DF1E55B1B41E6D1007A6182 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E55D1B41E6D1007A6182 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = SOURCE_ROOT; };
+		9DF1E5641B41F937007A6182 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
+		9DF1E5651B41F937007A6182 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9DF1E5661B41F937007A6182 /* Nimble.framework in Frameworks */,
+				9DF1E5671B41F937007A6182 /* Quick.framework in Frameworks */,
 				9DF1E5611B41E6E1007A6182 /* Box.framework in Frameworks */,
 				9DF1E5621B41E6E1007A6182 /* ReactiveCocoa.framework in Frameworks */,
 				9DF1E5631B41E6E1007A6182 /* Result.framework in Frameworks */,
@@ -107,7 +113,7 @@
 		9DF1E5491B41E438007A6182 /* ReactiveArrayTests */ = {
 			isa = PBXGroup;
 			children = (
-				9DF1E54C1B41E438007A6182 /* ReactiveArrayTests.swift */,
+				9DF1E54C1B41E438007A6182 /* ReactiveArraySpec.swift */,
 				9DF1E54A1B41E438007A6182 /* Supporting Files */,
 			);
 			path = ReactiveArrayTests;
@@ -124,6 +130,8 @@
 		9DF1E55A1B41E6A4007A6182 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9DF1E5641B41F937007A6182 /* Nimble.framework */,
+				9DF1E5651B41F937007A6182 /* Quick.framework */,
 				9DF1E55B1B41E6D1007A6182 /* Box.framework */,
 				9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */,
 				9DF1E55D1B41E6D1007A6182 /* Result.framework */,
@@ -263,6 +271,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Box.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
 			);
 			name = Carthage;
 			outputPaths = (
@@ -286,7 +296,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DF1E54D1B41E438007A6182 /* ReactiveArrayTests.swift in Sources */,
+				9DF1E54D1B41E438007A6182 /* ReactiveArraySpec.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

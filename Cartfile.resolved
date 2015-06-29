@@ -1,3 +1,5 @@
 github "robrix/Box" "1.2.2"
+github "Quick/Nimble" "v1.0.0"
+github "Quick/Quick" "v0.3.1"
 github "antitypical/Result" "0.4.4"
 github "ReactiveCocoa/ReactiveCocoa" "b89e1b73f2d1c6a99e0916f699ab6dcda71c74b5"

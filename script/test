@@ -1,0 +1,2 @@
+#!/bin/bash
+xcodebuild -scheme ReactiveArray -project ReactiveArray.xcodeproj -sdk iphonesimulator test | xcpretty -c

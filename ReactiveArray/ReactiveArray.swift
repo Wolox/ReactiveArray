@@ -73,12 +73,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         return _elements.debugDescription
     }
     
-    // TODO: Remove this in Swift 2.0
-    public func generate() -> IndexingGenerator<Array<T>> {
-        return _elements.generate()
-    }
-    
-    init(elements:[T]) {
+    public init(elements:[T]) {
         _elements = elements
         observableCount = PropertyOf(_mutableCount)
         
@@ -88,13 +83,13 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         
     }
     
-    convenience init(producer: OperationProducer) {
+    public convenience init(producer: OperationProducer) {
         self.init()
         
         producer |> start(_sink)
     }
     
-    convenience init() {
+    public convenience init() {
         self.init(elements: [])
     }
     
@@ -126,16 +121,26 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         return ReactiveArray<U>(producer: producer |> ReactiveCocoa.map { $0.map(transformer) })
     }
     
+    // TODO: Remove this in Swift 2.0
+    public func generate() -> IndexingGenerator<Array<T>> {
+        return _elements.generate()
+    }
+    
+    public func toArray() -> Array<T> {
+        return _elements
+    }
+    
     private func updateArray(operation: Operation<T>) {
         switch operation {
         case .Append(let boxedValue):
             _elements.append(boxedValue.value)
+            _mutableCount.put(_elements.count)
         case .Insert(let index, let boxedValue):
             _elements[index] = boxedValue.value
         case .Delete(let index):
             _elements.removeAtIndex(index)
+            _mutableCount.put(_elements.count)
         }
-        _mutableCount.put(_elements.count)
     }
     
 }

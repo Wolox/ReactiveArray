@@ -20,26 +20,6 @@ import Foundation
 import ReactiveCocoa
 import Box
 
-public enum Operation<T> {
-    
-    case Append(value: Box<T>)
-    case Insert(index: Int, value: Box<T>)
-    case Delete(index: Int)
-    
-    func map<U>(mapper: T -> U) -> Operation<U> {
-        let result: Operation<U>
-        switch self {
-        case .Append(let boxedValue):
-            result = Operation<U>.Append(value: Box(mapper(boxedValue.value)))
-        case .Insert(let index, let boxedValue):
-            result = Operation<U>.Insert(index: index, value: Box(mapper(boxedValue.value)))
-        case .Delete(let index):
-            result = Operation<U>.Delete(index: index)
-        }
-        return result
-    }
-}
-
 public final class ReactiveArray<T>: CollectionType, MutableCollectionType, DebugPrintable {
     
     typealias OperationProducer = SignalProducer<Operation<T>, NoError>

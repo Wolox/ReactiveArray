@@ -19,6 +19,7 @@
 		9DF1E5631B41E6E1007A6182 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55D1B41E6D1007A6182 /* Result.framework */; };
 		9DF1E5661B41F937007A6182 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E5641B41F937007A6182 /* Nimble.framework */; };
 		9DF1E5671B41F937007A6182 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E5651B41F937007A6182 /* Quick.framework */; };
+		9DF1E5691B444BCA007A6182 /* Operation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E5681B444BCA007A6182 /* Operation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		9DF1E55D1B41E6D1007A6182 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E5641B41F937007A6182 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E5651B41F937007A6182 /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = SOURCE_ROOT; };
+		9DF1E5681B444BCA007A6182 /* Operation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				9DF1E53F1B41E438007A6182 /* ReactiveArray.h */,
 				9DF1E5561B41E4A2007A6182 /* ReactiveArray.swift */,
+				9DF1E5681B444BCA007A6182 /* Operation.swift */,
 				9DF1E53D1B41E438007A6182 /* Supporting Files */,
 			);
 			path = ReactiveArray;
@@ -289,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9DF1E5571B41E4A2007A6182 /* ReactiveArray.swift in Sources */,
+				9DF1E5691B444BCA007A6182 /* Operation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

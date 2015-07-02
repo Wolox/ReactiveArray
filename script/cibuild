@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+
+echo ""
+echo "####### Bootstrap Phase #######"
+echo ""
+script/bootstrap
+
+echo ""
+echo ""
+echo "####### Build & Test Phase #######"
+echo ""
+set -o pipefail && xcodebuild -project ReactiveArray.xcodeproj -scheme "ReactiveArray" -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6" test | xcpretty -c

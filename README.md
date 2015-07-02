@@ -31,6 +31,24 @@ project.
 [Result]: https://github.com/antitypical/Result
 [ReactiveCocoa]: https://github.com/ReactiveCocoa/ReactiveCocoa
 
+### [CocoaPods]
+
+[CocoaPods]: http://cocoapods.org
+
+Add the following to your [Podfile](http://guides.cocoapods.org/using/the-podfile.html):
+
+```ruby
+pod 'ReactiveArray'
+```
+
+You will also need to make sure you're opting into using frameworks:
+
+```ruby
+use_frameworks!
+```
+
+Then run `pod install` with CocoaPods 0.36 or newer.
+
 ## Usage
 
 TODO

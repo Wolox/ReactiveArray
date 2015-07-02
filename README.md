@@ -3,7 +3,7 @@
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Wolox/ReactiveArray.svg?branch=master)](https://travis-ci.org/Wolox/ReactiveArray)
 
-An array class implemented in Swift that can be observed using ReactiveCocoa's Signals
+An array class implemented in Swift that can be observed using [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)'s Signals.
 
 ## Installation
 

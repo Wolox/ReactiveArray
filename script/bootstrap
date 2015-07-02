@@ -3,4 +3,4 @@
 set -e
 
 bundle install
-carthage bootstrap
+carthage bootstrap --verbose

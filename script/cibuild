@@ -16,11 +16,6 @@ KEYCHAIN=ios-build.keychain
 main ()
 {
     echo ""
-    echo "####### Configure Github Credentials #######"
-    echo ""
-    configure_github_credentials
-
-    echo ""
     echo "####### Importing Developer Certificates #######"
     echo ""
     import_certs
@@ -81,16 +76,7 @@ delete_keychain ()
     security delete-keychain "$KEYCHAIN"
 }
 
-configure_github_credentials ()
-{
-    echo "host=github.com
-protocol=https
-user=$GITHUB_USER
-password=$GITHUB_PASSWORD" > git credential-osxkeychain store
-}
-
 export -f import_certs
 export -f delete_keychain
-export -f install_credential_helper
 
 main

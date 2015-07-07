@@ -3,4 +3,15 @@
 set -e
 
 bundle install
-carthage bootstrap
+
+if [ -z "$GITHUB_ACCESS_TOKEN" ]
+then
+  carthage bootstrap
+else
+  echo "   -> Installing forked version of carthage"
+  echo ""
+  git clone -b github-access-token-option https://github.com/guidomb/Carthage.git "$SCRIPT_DIR/Carthage"
+  (cd "$SCRIPT_DIR/Carthage"; make install)
+
+  carthage bootstrap --github-access-token "$GITHUB_ACCESS_TOKEN"
+fi

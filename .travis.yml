@@ -1,8 +1,5 @@
 language: objective-c
 osx_image: xcode6.4
-before_install:
-- brew update
-- brew install carthage
 script: script/cibuild
 branches:
   only:

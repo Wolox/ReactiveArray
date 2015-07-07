@@ -35,6 +35,30 @@ project.
 
 TODO
 
+## Contributing
+
+### Setup project
+
+If you want to contribute you need to setup your
+development environment first.
+
+    git clone https://github.com/Wolox/ReactiveArray.git
+    cd ReactiveArray
+    script/bootstrap
+    open ReactiveArray.xcodeproj
+
+#### Environment dependencies
+
+The following dependencies must be installed in your development machine.
+
+ * XCode & XCode command line tools
+ * Homebrew
+ * Ruby
+ * Bundler (sudoless)
+ * Carthage
+ * Gcovr
+ * SwiftCov
+
 ## About
 
 This project is maintained by [Guido Marucci Blas](https://github.com/guidomb) and it was written by [Wolox](http://www.wolox.com.ar).

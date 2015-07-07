@@ -1,0 +1,15 @@
+#!/bin/sh
+
+coverage_folder="./coverage"
+
+# Generate coverage files
+swiftcov generate --output $coverage_folder \
+  xcodebuild -scheme ReactiveArray -project ReactiveArray.xcodeproj \
+  -sdk iphonesimulator -configuration Debug test
+
+# Generate HTML coverage report
+gcovr -v -r ../ \
+  -e "^.*/ReactiveArray/Carthage/.*\.swift$" \
+  -e "^.*/ReactiveArray/ReactiveArrayTests/.*\.swift$" \
+  --use-gcov-files --html --html-details \
+  --output $coverage_folder/index.html --keep

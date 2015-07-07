@@ -63,7 +63,7 @@ import_certs ()
     security import "$certpath" -k "$KEYCHAIN" -T /usr/bin/codesign
 
     # Import our development certificate.
-    security import "$SCRIPT_DIR/certificates/woloxtravisci.p12" -k "$KEYCHAIN" -P "$KEY_PASSWORD" -T /usr/bin/codesign
+    security import "$SCRIPT_DIR/certificates/cibot.p12" -k "$KEYCHAIN" -P "$KEY_PASSWORD" -T /usr/bin/codesign
 }
 
 delete_keychain ()

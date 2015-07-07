@@ -16,6 +16,12 @@ KEYCHAIN=ios-build.keychain
 main ()
 {
     echo ""
+    echo "####### Configure Github Credentials #######"
+    echo ""
+    install_credential_helper
+    configure_github_credentials
+
+    echo ""
     echo "####### Importing Developer Certificates #######"
     echo ""
     import_certs
@@ -76,7 +82,24 @@ delete_keychain ()
     security delete-keychain "$KEYCHAIN"
 }
 
+install_credential_helper ()
+{
+    curl -s -O https://github-media-downloads.s3.amazonaws.com/osx/git-credential-osxkeychain
+    chmod u+x git-credential-osxkeychain
+    mv git-credential-osxkeychain "$(dirname $(which git))/git-credential-osxkeychain"
+    git config --global credential.helper osxkeychain
+}
+
+configure_github_credentials ()
+{
+    echo "host=github.com
+protocol=https
+user=$GITHUB_USER
+password=$GITHUB_PASSWORD" > git credential-osxkeychain store
+}
+
 export -f import_certs
 export -f delete_keychain
+export -f install_credential_helper
 
 main

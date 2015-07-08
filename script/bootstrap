@@ -4,6 +4,8 @@ set -e
 
 bundle install
 
+sudo installer -pkg script/SwiftCov.pkg -target /
+
 if [ -z "$GITHUB_ACCESS_TOKEN" ]
 then
   carthage bootstrap

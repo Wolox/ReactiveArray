@@ -2,14 +2,30 @@
 
 coverage_folder="./coverage"
 
-# Generate coverage files
-swiftcov generate --output $coverage_folder \
-  xcodebuild -scheme ReactiveArray -project ReactiveArray.xcodeproj \
-  -sdk iphonesimulator -configuration Debug test
+if [ -z "$SKIP_COVERAGE_GENERATION" ]
+then
+  echo "*** Generating coverage files ***"
+  swiftcov generate --output $coverage_folder \
+    xcodebuild -scheme ReactiveArray -project ReactiveArray.xcodeproj \
+    -sdk iphonesimulator -configuration Debug test
+else
+  echo "WARN: Coverage files genration skipped"
+fi
 
-# Generate HTML coverage report
-gcovr -v -r ../ \
-  -e "^.*/ReactiveArray/Carthage/.*\.swift$" \
-  -e "^.*/ReactiveArray/ReactiveArrayTests/.*\.swift$" \
-  --use-gcov-files --html --html-details \
-  --output $coverage_folder/index.html --keep
+if [ "$1" = "upload" ]
+then
+  echo ""
+  echo ""
+  echo "*** Uploading coverage report to Coveralls.io ***"
+  bundle exec coveralls-gcov --repo-token "$COVERALLS_TOKEN" \
+    --no-gcov -e Carthage -e Carthage,ReactiveArrayTests
+else
+  echo ""
+  echo ""
+  echo "*** Generating HTML coverage report ***"
+  gcovr -v -r ../ \
+    -e "^.*/ReactiveArray/Carthage/.*\.swift$" \
+    -e "^.*/ReactiveArray/ReactiveArrayTests/.*\.swift$" \
+    --use-gcov-files --html --html-details \
+    --output $coverage_folder/index.html --keep
+fi

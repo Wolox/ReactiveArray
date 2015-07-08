@@ -1,10 +1,16 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    commander (4.3.4)
+      highline (~> 1.7.2)
+    coveralls-gcov (0.1.2)
+      commander
+    highline (1.7.2)
     xcpretty (0.1.10)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  coveralls-gcov
   xcpretty

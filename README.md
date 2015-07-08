@@ -2,6 +2,7 @@
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Wolox/ReactiveArray.svg?branch=master)](https://travis-ci.org/Wolox/ReactiveArray)
+[![Coverage Status](https://coveralls.io/repos/Wolox/ReactiveArray/badge.svg?branch=master&service=github)](https://coveralls.io/github/Wolox/ReactiveArray?branch=master)
 
 An array class implemented in Swift that can be observed using [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)'s Signals.
 

@@ -34,7 +34,119 @@ project.
 
 ## Usage
 
-TODO
+### Array operations
+
+```swift
+let array = ReactiveArray(elements: [1,2,3])
+
+array.append(4) // => [1,2,3,4]
+array.append(5) // => [1,2,3,4,5]
+
+array[0] = 5 // => [5,2,3,4,5]
+array.removeAtIndex(4) // => [5,2,3,4]
+```
+
+`ReactiveArray` conforms to `CollectionType` and `MutableCollectionType` which allows you to perform operations like
+`map` or `filter`.
+
+### Observing changes
+
+The array can be observed for mutations using the `signal` or `producer` properties. Both `Signal` and `SignalProducer` will emit `Operation` values on observation for any of the mutating
+operations performed to the array.
+
+`Operation` is an enumeration with three cases. One for each
+mutating operation: `Append`, `Insert` and `RemoveElement`
+
+#### Using `SignalProducer`
+
+Prints an append operation for each element
+that has already been stored in the array and then
+the corresponding operation for any new operation performed to the array.
+
+```swift
+let array = ReactiveArray(elements: [1,2,3])
+array.producer |> start(next: { println($0) })
+array[0] = 5
+array[1] = 4
+array.append(2)
+array.removeAtIndex(2)
+```
+
+will print the following output:
+
+```
+.Append(value: 1)
+.Append(value: 2)
+.Append(value: 3)
+.Insert(value: 5, atIndex: 0)
+.Insert(value: 4, atIndex: 1)
+.RemoveElement(atIndex:2)
+```
+
+#### Using `Signal`
+
+The signal property will only emit values for operations performed in the array after observation.
+
+```swift
+let array = ReactiveArray(elements: [1,2,3])
+array.signal.observe { println($0) }
+array[0] = 5
+array[1] = 4
+array.append(2)
+array.removeAtIndex(2)
+```
+
+will print the following output:
+
+```
+.Insert(value: 5, atIndex: 0)
+.Insert(value: 4, atIndex: 1)
+.RemoveElement(atIndex:2)
+```
+
+#### Using `observableCount`
+
+You can also observe the `observableCount` property that exposes a producer that emits the current amount of elements each time the array is mutated.
+
+```swift
+let array = ReactiveArray<String>()
+array.observableCount.producer |> start(next: { println($0) })
+array.append("Hello")
+array.append("World")
+```
+
+will print the following output:
+
+```
+0
+1
+2
+```
+
+### Mirror
+
+Mirror creates a new `ReactiveArray` by applying a `transform` operation for each element contained in the original array. It is like `map` but the returned array will mutate everytime the original array mutates.
+
+```swift
+let array = ReactiveArray(elements: [1,2,3])
+let doubles = array.mirror { $0 * 2 }
+doubles.producer |> start(next: { println($0) })
+array.append(4)
+array.append(5)
+array[0] = 6
+```
+
+will print the following output:
+
+```
+.Append(value: 2)
+.Append(value: 4)
+.Append(value: 6)
+.Append(value: 8)
+.Append(value: 10)
+.Insert(value: 12, atIndex: 0)
+```
+
 
 ## Contributing
 

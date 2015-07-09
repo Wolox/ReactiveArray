@@ -32,9 +32,9 @@ public enum Operation<T>: DebugPrintable {
         let description: String
         switch self {
         case .Append(let boxedValue):
-            description = ".Append(\(boxedValue.value))"
+            description = ".Append(value:\(boxedValue.value))"
         case .Insert(let index, let boxedValue):
-            description = ".Insert(\(index), \(boxedValue.value))"
+            description = ".Insert(value: \(boxedValue.value), atIndex:\(index))"
         case .RemoveElement(let index):
             description = ".RemoveElement(atIndex:\(index))"
         }

@@ -1,7 +1,6 @@
 language: objective-c
 osx_image: xcode6.4
 script: script/cibuild
-after_success: script/coverage upload
 branches:
   only:
   - master

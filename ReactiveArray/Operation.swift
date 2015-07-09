@@ -13,7 +13,7 @@ public enum Operation<T>: DebugPrintable {
     
     case Append(value: Box<T>)
     case Insert(index: Int, value: Box<T>)
-    case Delete(index: Int)
+    case RemoveElement(atIndex: Int)
     
     public func map<U>(mapper: T -> U) -> Operation<U> {
         let result: Operation<U>
@@ -22,8 +22,8 @@ public enum Operation<T>: DebugPrintable {
             result = Operation<U>.Append(value: Box(mapper(boxedValue.value)))
         case .Insert(let index, let boxedValue):
             result = Operation<U>.Insert(index: index, value: Box(mapper(boxedValue.value)))
-        case .Delete(let index):
-            result = Operation<U>.Delete(index: index)
+        case .RemoveElement(let index):
+            result = Operation<U>.RemoveElement(atIndex: index)
         }
         return result
     }
@@ -35,8 +35,8 @@ public enum Operation<T>: DebugPrintable {
             description = ".Append(\(boxedValue.value))"
         case .Insert(let index, let boxedValue):
             description = ".Insert(\(index), \(boxedValue.value))"
-        case .Delete(let index):
-            description = ".Delete(\(index))"
+        case .RemoveElement(let index):
+            description = ".RemoveElement(atIndex:\(index))"
         }
         return description
     }
@@ -51,7 +51,7 @@ public func ==<T: Equatable>(lhs: Operation<T>, rhs: Operation<T>) -> Bool {
         return leftBoxedValue.value == rightBoxedValue.value
     case (.Insert(let leftIndex, let leftBoxedValue), .Insert(let rightIndex, let rightBoxedValue)):
         return leftIndex == rightIndex && leftBoxedValue.value == rightBoxedValue.value
-    case (.Delete(let leftIndex), .Delete(let rightIndex)):
+    case (.RemoveElement(let leftIndex), .RemoveElement(let rightIndex)):
         return leftIndex == rightIndex
     default:
         return false

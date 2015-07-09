@@ -53,7 +53,7 @@ class OperationSpec: QuickSpec {
             context("when the operation is a Delete operation") {
                 
                 beforeEach {
-                    operation = Operation.Delete(index: 5)
+                    operation = Operation.RemoveElement(atIndex: 5)
                 }
                 
                 it("does nothing") {

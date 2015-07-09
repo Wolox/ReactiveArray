@@ -25,7 +25,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
                     onAppend(boxedValue)
                 case .Insert(let index, let boxedValue):
                     onInsert(index, boxedValue)
-                case .Delete(let index):
+                case .RemoveElement(let index):
                     onDelete(index)
                 }
                 done()

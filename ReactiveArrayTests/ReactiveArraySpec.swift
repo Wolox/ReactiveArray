@@ -15,7 +15,7 @@ import Box
 private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation<T>, NoError>,
     #when: () -> (),
     onAppend: Box<T> -> () = { fail("Invalid operation type: .Append(\($0))") },
-    onInsert: (Int, Box<T>) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
+    onInsert: (Box<T>, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
     onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
         waitUntil { done in
@@ -23,8 +23,8 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
                 switch operation {
                 case .Append(let boxedValue):
                     onAppend(boxedValue)
-                case .Insert(let index, let boxedValue):
-                    onInsert(index, boxedValue)
+                case .Insert(let boxedValue, let index):
+                    onInsert(boxedValue, index)
                 case .RemoveElement(let index):
                     onDelete(index)
                 }
@@ -38,7 +38,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
 private func waitForOperation<T>(fromSignal signal: Signal<Operation<T>, NoError>,
     #when: () -> (),
     onAppend: Box<T> -> () = { fail("Invalid operation type: .Append(\($0))") },
-    onInsert: (Int, Box<T>) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
+    onInsert: (Box<T>, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
     onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
     let producer = SignalProducer<Operation<T>, NoError> { (observer, disposable) in signal.observe(observer) }
@@ -48,7 +48,7 @@ private func waitForOperation<T>(fromSignal signal: Signal<Operation<T>, NoError
 private func waitForOperation<T>(fromArray array: ReactiveArray<T>,
     #when: () -> (),
     onAppend: Box<T> -> () = { fail("Invalid operation type: .Append(\($0))") },
-    onInsert: (Int, Box<T>) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
+    onInsert: (Box<T>, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1.value))") },
     onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
     waitForOperation(fromSignal: array.signal, when: when, onAppend: onAppend, onInsert: onInsert, onDelete: onDelete)
@@ -110,7 +110,7 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array.insert(5, atIndex: 1)
                         },
-                        onInsert: { (index, boxedValue) in
+                        onInsert: { (boxedValue, index) in
                             expect(boxedValue.value).to(equal(5))
                             expect(index).to(equal(1))
                         }
@@ -180,7 +180,7 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array[1] = 5
                         },
-                        onInsert: { (index, boxedValue) in
+                        onInsert: { (boxedValue, index) in
                             expect(boxedValue.value).to(equal(5))
                             expect(index).to(equal(1))
                         }
@@ -211,7 +211,7 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array[1] = 5
                         },
-                        onInsert: { (index, boxedValue) in
+                        onInsert: { (boxedValue, index) in
                             expect(boxedValue.value).to(equal(15))
                             expect(index).to(equal(1))
                         }
@@ -307,7 +307,7 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             a.insert(5, atIndex: 0)
                         },
-                        onInsert: { (index, boxedValue) in
+                        onInsert: { (boxedValue, index) in
                             expect(boxedValue.value).to(equal(5))
                             expect(index).to(equal(0))
                         }
@@ -346,7 +346,7 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array.insert(5, atIndex: 1)
                         },
-                        onInsert: { (index, boxedValue) in
+                        onInsert: { (boxedValue, index) in
                             expect(boxedValue.value).to(equal(5))
                             expect(index).to(equal(1))
                         }

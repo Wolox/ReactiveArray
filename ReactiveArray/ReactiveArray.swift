@@ -107,8 +107,8 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         _sink.put(Event.Next(Box(operation)))
     }
     
-    public func insert(newElement: T, atIndex: Int) {
-        let operation: Operation<T> = .Insert(index: atIndex, value: Box(newElement))
+    public func insert(newElement: T, atIndex index : Int) {
+        let operation: Operation<T> = .Insert(value: Box(newElement), atIndex: index)
         _sink.put(Event.Next(Box(operation)))
     }
     
@@ -135,7 +135,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         case .Append(let boxedValue):
             _elements.append(boxedValue.value)
             _mutableCount.put(_elements.count)
-        case .Insert(let index, let boxedValue):
+        case .Insert(let boxedValue, let index):
             _elements[index] = boxedValue.value
         case .RemoveElement(let index):
             _elements.removeAtIndex(index)

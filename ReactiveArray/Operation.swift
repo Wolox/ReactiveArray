@@ -12,7 +12,7 @@ import Box
 public enum Operation<T>: DebugPrintable {
     
     case Append(value: Box<T>)
-    case Insert(index: Int, value: Box<T>)
+    case Insert(value: Box<T>, atIndex: Int)
     case RemoveElement(atIndex: Int)
     
     public func map<U>(mapper: T -> U) -> Operation<U> {
@@ -20,8 +20,8 @@ public enum Operation<T>: DebugPrintable {
         switch self {
         case .Append(let boxedValue):
             result = Operation<U>.Append(value: Box(mapper(boxedValue.value)))
-        case .Insert(let index, let boxedValue):
-            result = Operation<U>.Insert(index: index, value: Box(mapper(boxedValue.value)))
+        case .Insert(let boxedValue, let index):
+            result = Operation<U>.Insert(value: Box(mapper(boxedValue.value)), atIndex: index)
         case .RemoveElement(let index):
             result = Operation<U>.RemoveElement(atIndex: index)
         }
@@ -49,7 +49,7 @@ public func ==<T: Equatable>(lhs: Operation<T>, rhs: Operation<T>) -> Bool {
     switch (lhs, rhs) {
     case (.Append(let leftBoxedValue), .Append(let rightBoxedValue)):
         return leftBoxedValue.value == rightBoxedValue.value
-    case (.Insert(let leftIndex, let leftBoxedValue), .Insert(let rightIndex, let rightBoxedValue)):
+    case (.Insert(let leftBoxedValue, let leftIndex), .Insert(let rightBoxedValue, let rightIndex)):
         return leftIndex == rightIndex && leftBoxedValue.value == rightBoxedValue.value
     case (.RemoveElement(let leftIndex), .RemoveElement(let rightIndex)):
         return leftIndex == rightIndex

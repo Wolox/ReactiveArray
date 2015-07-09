@@ -38,13 +38,13 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Insert operation") {
                 
                 beforeEach {
-                    operation = Operation.Insert(index: 5, value: Box(10))
+                    operation = Operation.Insert(value: Box(10), atIndex: 5)
                 }
                 
                 it("maps the value to be inserted") {
                     let mappedOperation = operation.map { $0 * 2 }
                     
-                    let areEqual = mappedOperation == Operation.Insert(index: 5, value: Box(20))
+                    let areEqual = mappedOperation == Operation.Insert(value: Box(20), atIndex: 5)
                     expect(areEqual).to(beTrue())
                 }
                 

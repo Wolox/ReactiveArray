@@ -535,6 +535,14 @@ class ReactiveArraySpec: QuickSpec {
             
         }
         
+        describe("last") {
+            
+            it("returns the last element in the array") {
+                expect(array.last).to(equal(4))
+            }
+            
+        }
+        
     }
     
 }

@@ -69,6 +69,10 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         return _elements.first
     }
     
+    public var last: T? {
+        return _elements[_elements.count - 1]
+    }
+    
     public var debugDescription: String {
         return _elements.debugDescription
     }

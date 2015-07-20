@@ -1,11 +1,10 @@
 # ReactiveArray
 
-[![Join the chat at https://gitter.im/Wolox/ReactiveArray](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Wolox/ReactiveArray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Build Status](https://travis-ci.org/Wolox/ReactiveArray.svg?branch=master)](https://travis-ci.org/Wolox/ReactiveArray)
 [![Coverage Status](https://coveralls.io/repos/Wolox/ReactiveArray/badge.svg?branch=master&service=github)](https://coveralls.io/github/Wolox/ReactiveArray?branch=master)
 [![Release](https://img.shields.io/github/release/Wolox/ReactiveArray.svg)](https://github.com/Wolox/ReactiveArray/releases)
+[![Join the chat at https://gitter.im/Wolox/ReactiveArray](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Wolox/ReactiveArray?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 An array class implemented in Swift that can be observed using [ReactiveCocoa](https://github.com/ReactiveCocoa/ReactiveCocoa)'s Signals.
 

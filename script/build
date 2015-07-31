@@ -4,7 +4,12 @@ set -e
 
 if [ -f Cartfile ] && type carthage > /dev/null
 then
-  carthage build --no-skip-current --platform ios
+  carthage_cmd="carthage build --no-skip-current --platform ios"
+  if [ "$USE_SSH" == "true" ]
+  then
+    carthage_cmd="$carthage_cmd --use-ssh"
+  fi
+  eval $carthage_cmd
 else
   source script/.env
 

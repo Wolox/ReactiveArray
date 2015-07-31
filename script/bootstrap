@@ -110,9 +110,9 @@ bootstrap_carthage ()
   echo ""
   if [ -z $GITHUB_ACCESS_TOKEN ]
   then
-    time carthage bootstrap --platform ios --use-ssh
+    time carthage bootstrap --platform ios
   else
-    time carthage bootstrap --platform ios --use-ssh --github-access-token $GITHUB_ACCESS_TOKEN
+    time carthage bootstrap --platform ios --github-access-token $GITHUB_ACCESS_TOKEN
   fi
 }
 

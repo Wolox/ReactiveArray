@@ -15,10 +15,13 @@ KEYCHAIN=ios-build.keychain
 
 main ()
 {
-    echo ""
-    echo "####### Importing Developer Certificates #######"
-    echo ""
-    import_certs
+    if [ -f Cartfile ]
+    then
+      echo ""
+      echo "####### Importing Developer Certificates #######"
+      echo ""
+      import_certs
+    fi
 
     echo ""
     echo "####### Bootstrap Phase #######"
@@ -31,8 +34,8 @@ main ()
       echo ""
       echo "####### Build & Test Phase #######"
       echo ""
-      set -o pipefail && xcodebuild -project ReactiveArray.xcodeproj -scheme "ReactiveArray" -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 6" test | xcpretty -c
-      status=$?
+      script/test
+      status=$? # TODO This is not working!!!!
     fi
 
     delete_keychain
@@ -47,7 +50,7 @@ import_certs ()
         return 0
     fi
 
-    echo "*** Setting up code signing..."
+    echo " → Setting up code signing..."
     local password=cibuild
 
     # Create a temporary keychain for code signing.
@@ -59,7 +62,7 @@ import_certs ()
     # Download the certificate for the Apple Worldwide Developer Relations
     # Certificate Authority.
     local certpath="$SCRIPT_DIR/apple_wwdr.cer"
-    curl 'https://developer.apple.com/certificationauthority/AppleWWDRCA.cer' > "$certpath"
+    curl -s 'https://developer.apple.com/certificationauthority/AppleWWDRCA.cer' > "$certpath"
     security import "$certpath" -k "$KEYCHAIN" -T /usr/bin/codesign
 
     # Import our development certificate.

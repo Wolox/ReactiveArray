@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+if [ -f Cartfile ] && type carthage > /dev/null
+then
+  carthage update --platform ios
+elif [ -f Podfile ]
+then
+  if type bundle > /dev/null && bundle show pod > /dev/null
+  then
+    bundle exec pod update
+  else
+    pod update
+  fi
+fi

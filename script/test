@@ -1,2 +1,38 @@
 #!/bin/bash
-xcodebuild -scheme ReactiveArray -project ReactiveArray.xcodeproj -sdk iphonesimulator test | xcpretty -c
+
+source script/.env
+
+# TODO iterate over the list of test targets and test them
+# xcodebuild -list | egrep ".*Tests$"
+
+test_command="set -o pipefail && xcodebuild -scheme $XCODE_SCHEME"
+if [ -z "$XCODE_WORKSPACE" ]
+then
+  test_command="$test_command -project $XCODE_PROJECT"
+else
+  test_command="$test_command -workspace $XCODE_WORKSPACE"
+fi
+test_command="$test_command -sdk iphonesimulator test -configuration Debug"
+if type bundle > /dev/null && bundle show xcpretty > /dev/null
+then
+  test_command="$test_command | xcpretty -c"
+fi
+
+echo ""
+echo " → Running tests"
+echo ""
+eval $test_command
+
+if [ -f "$PROJECT_NAME.podspec" ]
+then
+  echo ""
+  echo " → Linting $PROJECT_NAME.podspec"
+  echo ""
+  if type bundle > /dev/null && bundle show pod > /dev/null
+  then
+    bundle exec pod lib lint
+  elif type pod > /dev/null
+  then
+    pod lib lint
+  fi
+fi

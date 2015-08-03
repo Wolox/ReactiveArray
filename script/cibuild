@@ -76,7 +76,9 @@ delete_keychain ()
         return 0
     fi
 
+    echo " → Removing temporary keychain"
     security delete-keychain "$KEYCHAIN"
+    echo "    ✔ Temporary keychain successfully removed."
 }
 
 export -f import_certs

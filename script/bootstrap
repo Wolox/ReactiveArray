@@ -92,15 +92,18 @@ bundle_install ()
 
 install_git_hooks ()
 {
-  echo ""
-  echo " → Installing git hooks"
-  echo ""
-  for hook in script/git_hooks/*
-  do
-    cp $hook .git/hooks
-    echo "    ✔ $hook successfully installed"
-  done
-  echo ""
+  if [ ! -z "$INSTALL_GITHOOKS" ]
+  then
+    echo ""
+    echo " → Installing git hooks"
+    echo ""
+    for hook in script/git_hooks/*
+    do
+      cp $hook .git/hooks
+      echo "    ✔ $hook successfully installed"
+    done
+    echo ""
+  fi
 }
 
 bootstrap_carthage ()
@@ -117,6 +120,10 @@ bootstrap_carthage ()
   if [ "$USE_SSH" == "true" ]
   then
     carthage_cmd="$carthage_cmd --use-ssh"
+  fi
+  if [ "$USE_SUBMODULES" == "true" ]
+  then
+    carthage_cmd="$carthage_cmd --use-submodules --no-build"
   fi
   eval $carthage_cmd
 }
@@ -208,6 +215,14 @@ main ()
     init_submodules
   fi
 
+  open_file_name=""
+  if [ -z "$XCODE_WORKSPACE" ]
+  then
+    open_file_name=$XCODE_PROJECT
+  else
+    open_file_name=$XCODE_WORKSPACE
+  fi
+
   echo ""
   echo " $PROJECT_NAME successfully bootstrapped"
   echo ""
@@ -219,7 +234,7 @@ main ()
   echo ""
   echo " You can start hacking by executing:"
   echo ""
-  echo "    open $XCODE_PROJECT"
+  echo "    open $open_file_name"
   echo ""
 }
 

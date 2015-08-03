@@ -2,12 +2,18 @@
 
 set -e
 
+source script/.env
+
 if [ -f Cartfile ] && type carthage > /dev/null
 then
   carthage_cmd="carthage update --platform ios"
   if [ "$USE_SSH" == "true" ]
   then
     carthage_cmd="$carthage_cmd --use-ssh"
+  fi
+  if [ "$USE_SUBMODULES" == "true" ]
+  then
+    carthage_cmd="$carthage_cmd --use-submodules --no-build"
   fi
   eval $carthage_cmd
 elif [ -f Podfile ]

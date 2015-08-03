@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 source script/.env
 
 # TODO iterate over the list of test targets and test them
@@ -15,7 +17,7 @@ fi
 test_command="$test_command -sdk iphonesimulator test -configuration Debug"
 if [ ! -z "$CIRCLE_ARTIFACTS" ]
 then
-  test_command=" | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
+  test_command="$test_command | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
 fi
 if type bundle > /dev/null && bundle show xcpretty > /dev/null
 then

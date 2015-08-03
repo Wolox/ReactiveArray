@@ -1,6 +1,7 @@
 # ReactiveArray
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Circle CI](https://circleci.com/gh/Wolox/ReactiveArray.svg?style=svg)](https://circleci.com/gh/Wolox/ReactiveArray)
 [![Build Status](https://travis-ci.org/Wolox/ReactiveArray.svg?branch=master)](https://travis-ci.org/Wolox/ReactiveArray)
 [![Coverage Status](https://coveralls.io/repos/Wolox/ReactiveArray/badge.svg?branch=master&service=github)](https://coveralls.io/github/Wolox/ReactiveArray?branch=master)
 [![Release](https://img.shields.io/github/release/Wolox/ReactiveArray.svg)](https://github.com/Wolox/ReactiveArray/releases)

@@ -13,9 +13,17 @@ else
   test_command="$test_command -workspace $XCODE_WORKSPACE"
 fi
 test_command="$test_command -sdk iphonesimulator test -configuration Debug"
+if [ ! -z "$CIRCLE_ARTIFACTS" ]
+then
+  test_command=" | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
+fi
 if type bundle > /dev/null && bundle show xcpretty > /dev/null
 then
   test_command="$test_command | xcpretty -c"
+  if [ ! -z "$CIRCLE_TEST_REPORTS" ]
+  then
+    test_command="$test_command --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml"
+  fi
 fi
 
 echo ""

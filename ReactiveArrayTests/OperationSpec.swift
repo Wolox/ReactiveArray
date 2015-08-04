@@ -67,6 +67,46 @@ class OperationSpec: QuickSpec {
             
         }
         
+        describe("#value") {
+        
+            context("when the operation is an Append operation") {
+                
+                beforeEach {
+                    operation = Operation.Append(value: Box(10))
+                }
+                
+                it("returns the appended value") {
+                    expect(operation.value).to(equal(10))
+                }
+                
+            }
+            
+            context("when the operation is an Insert operation") {
+                
+                beforeEach {
+                    operation = Operation.Insert(value: Box(10), atIndex: 5)
+                }
+                
+                it("returns the inserted value") {
+                    expect(operation.value).to(equal(10))
+                }
+                
+            }
+            
+            context("when the operation is an Remove operation") {
+                
+                beforeEach {
+                    operation = Operation.RemoveElement(atIndex: 5)
+                }
+                
+                it("returns .None") {
+                    expect(operation.value).to(beNil())
+                }
+                
+            }
+            
+        }
+        
     }
     
 }

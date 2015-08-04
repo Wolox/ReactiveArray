@@ -33,13 +33,25 @@ public enum Operation<T>: DebugPrintable {
         switch self {
         case .Append(let boxedValue):
             description = ".Append(value:\(boxedValue.value))"
-        case .Insert(let index, let boxedValue):
+        case .Insert(let boxedValue, let index):
             description = ".Insert(value: \(boxedValue.value), atIndex:\(index))"
         case .RemoveElement(let index):
             description = ".RemoveElement(atIndex:\(index))"
         }
         return description
     }
+    
+    public var value: T? {
+        switch self {
+        case .Append(let boxedValue):
+            return boxedValue.value
+        case .Insert(let boxedValue, let index):
+            return boxedValue.value
+        default:
+            return Optional.None
+        }
+    }
+    
 }
 
 // TODO: Uses constrained protocol extension when moving to Swift 2.0

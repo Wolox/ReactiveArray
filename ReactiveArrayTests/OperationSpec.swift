@@ -18,7 +18,7 @@ class OperationSpec: QuickSpec {
         
         var operation: Operation<Int>!
         
-        describe("map") {
+        describe("#map") {
             
             context("when the operation is an Append operation") {
                 

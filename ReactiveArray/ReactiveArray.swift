@@ -33,13 +33,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     }
     
     public var producer: OperationProducer {
-        let appendCurrentElements = OperationProducer { [unowned self](observer, disposable) in
-            for element in self._elements {
-                let operation = Operation.Append(value: Box(element))
-                observer.put(Event.Next(Box(operation)))
-            }
-            observer.put(Event.Completed)
-        }
+        let appendCurrentElements = OperationProducer(values:_elements.map { Operation.Append(value: Box($0)) })
         
         let forwardOperations = OperationProducer { (observer, dispoable) in self._signal.observe(observer) }
         

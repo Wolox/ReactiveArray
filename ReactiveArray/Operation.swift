@@ -7,21 +7,20 @@
 //
 
 import Foundation
-import Box
 
-public enum Operation<T>: DebugPrintable {
+public enum Operation<T>: CustomDebugStringConvertible {
     
-    case Append(value: Box<T>)
-    case Insert(value: Box<T>, atIndex: Int)
+    case Append(value: T)
+    case Insert(value: T, atIndex: Int)
     case RemoveElement(atIndex: Int)
     
     public func map<U>(mapper: T -> U) -> Operation<U> {
         let result: Operation<U>
         switch self {
-        case .Append(let boxedValue):
-            result = Operation<U>.Append(value: Box(mapper(boxedValue.value)))
-        case .Insert(let boxedValue, let index):
-            result = Operation<U>.Insert(value: Box(mapper(boxedValue.value)), atIndex: index)
+        case .Append(let value):
+            result = Operation<U>.Append(value: mapper(value))
+        case .Insert(let value, let index):
+            result = Operation<U>.Insert(value: mapper(value), atIndex: index)
         case .RemoveElement(let index):
             result = Operation<U>.RemoveElement(atIndex: index)
         }
@@ -31,10 +30,10 @@ public enum Operation<T>: DebugPrintable {
     public var debugDescription: String {
         let description: String
         switch self {
-        case .Append(let boxedValue):
-            description = ".Append(value:\(boxedValue.value))"
-        case .Insert(let boxedValue, let index):
-            description = ".Insert(value: \(boxedValue.value), atIndex:\(index))"
+        case .Append(let value):
+            description = ".Append(value:\(value))"
+        case .Insert(let value, let index):
+            description = ".Insert(value: \(value), atIndex:\(index))"
         case .RemoveElement(let index):
             description = ".RemoveElement(atIndex:\(index))"
         }
@@ -43,10 +42,10 @@ public enum Operation<T>: DebugPrintable {
     
     public var value: T? {
         switch self {
-        case .Append(let boxedValue):
-            return boxedValue.value
-        case .Insert(let boxedValue, let index):
-            return boxedValue.value
+        case .Append(let value):
+            return value
+        case .Insert(let value, _):
+            return value
         default:
             return Optional.None
         }
@@ -59,10 +58,10 @@ public enum Operation<T>: DebugPrintable {
 
 public func ==<T: Equatable>(lhs: Operation<T>, rhs: Operation<T>) -> Bool {
     switch (lhs, rhs) {
-    case (.Append(let leftBoxedValue), .Append(let rightBoxedValue)):
-        return leftBoxedValue.value == rightBoxedValue.value
-    case (.Insert(let leftBoxedValue, let leftIndex), .Insert(let rightBoxedValue, let rightIndex)):
-        return leftIndex == rightIndex && leftBoxedValue.value == rightBoxedValue.value
+    case (.Append(let leftValue), .Append(let rightValue)):
+        return leftValue == rightValue
+    case (.Insert(let leftValue, let leftIndex), .Insert(let rightValue, let rightIndex)):
+        return leftIndex == rightIndex && leftValue == rightValue
     case (.RemoveElement(let leftIndex), .RemoveElement(let rightIndex)):
         return leftIndex == rightIndex
     default:

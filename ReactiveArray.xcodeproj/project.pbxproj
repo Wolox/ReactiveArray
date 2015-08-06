@@ -12,10 +12,8 @@
 		9DF1E5461B41E438007A6182 /* ReactiveArray.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E53A1B41E438007A6182 /* ReactiveArray.framework */; };
 		9DF1E54D1B41E438007A6182 /* ReactiveArraySpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E54C1B41E438007A6182 /* ReactiveArraySpec.swift */; };
 		9DF1E5571B41E4A2007A6182 /* ReactiveArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DF1E5561B41E4A2007A6182 /* ReactiveArray.swift */; };
-		9DF1E55E1B41E6D1007A6182 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55B1B41E6D1007A6182 /* Box.framework */; };
 		9DF1E55F1B41E6D1007A6182 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */; };
 		9DF1E5601B41E6D1007A6182 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55D1B41E6D1007A6182 /* Result.framework */; };
-		9DF1E5611B41E6E1007A6182 /* Box.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55B1B41E6D1007A6182 /* Box.framework */; };
 		9DF1E5621B41E6E1007A6182 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */; };
 		9DF1E5631B41E6E1007A6182 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E55D1B41E6D1007A6182 /* Result.framework */; };
 		9DF1E5661B41F937007A6182 /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DF1E5641B41F937007A6182 /* Nimble.framework */; };
@@ -42,7 +40,6 @@
 		9DF1E54B1B41E438007A6182 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DF1E54C1B41E438007A6182 /* ReactiveArraySpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactiveArraySpec.swift; sourceTree = "<group>"; };
 		9DF1E5561B41E4A2007A6182 /* ReactiveArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactiveArray.swift; sourceTree = "<group>"; };
-		9DF1E55B1B41E6D1007A6182 /* Box.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Box.framework; path = Carthage/Build/iOS/Box.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E55D1B41E6D1007A6182 /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = SOURCE_ROOT; };
 		9DF1E5641B41F937007A6182 /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = SOURCE_ROOT; };
@@ -55,7 +52,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DF1E55E1B41E6D1007A6182 /* Box.framework in Frameworks */,
 				9DF1E55F1B41E6D1007A6182 /* ReactiveCocoa.framework in Frameworks */,
 				9DF1E5601B41E6D1007A6182 /* Result.framework in Frameworks */,
 			);
@@ -67,7 +63,6 @@
 			files = (
 				9DF1E5661B41F937007A6182 /* Nimble.framework in Frameworks */,
 				9DF1E5671B41F937007A6182 /* Quick.framework in Frameworks */,
-				9DF1E5611B41E6E1007A6182 /* Box.framework in Frameworks */,
 				9DF1E5621B41E6E1007A6182 /* ReactiveCocoa.framework in Frameworks */,
 				9DF1E5631B41E6E1007A6182 /* Result.framework in Frameworks */,
 				9DF1E5461B41E438007A6182 /* ReactiveArray.framework in Frameworks */,
@@ -138,7 +133,6 @@
 			children = (
 				9DF1E5641B41F937007A6182 /* Nimble.framework */,
 				9DF1E5651B41F937007A6182 /* Quick.framework */,
-				9DF1E55B1B41E6D1007A6182 /* Box.framework */,
 				9DF1E55C1B41E6D1007A6182 /* ReactiveCocoa.framework */,
 				9DF1E55D1B41E6D1007A6182 /* Result.framework */,
 			);
@@ -204,7 +198,9 @@
 		9DF1E5311B41E438007A6182 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0630;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Wolox;
 				TargetAttributes = {
 					9DF1E5391B41E438007A6182 = {
@@ -258,7 +254,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Box.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 			);
 			name = Carthage;
@@ -275,7 +270,6 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Box.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Nimble.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Quick.framework",
@@ -341,6 +335,7 @@
 				CURRENT_PROJECT_VERSION = 0.2.0;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -423,6 +418,7 @@
 				INFOPLIST_FILE = ReactiveArray/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ar.com.wolox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -444,6 +440,7 @@
 				INFOPLIST_FILE = ReactiveArray/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ar.com.wolox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -463,6 +460,7 @@
 				);
 				INFOPLIST_FILE = ReactiveArrayTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ar.com.wolox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -477,6 +475,7 @@
 				);
 				INFOPLIST_FILE = ReactiveArrayTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ar.com.wolox.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

@@ -124,11 +124,6 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
         return ReactiveArray<U>(producer: producer.map { $0.map(transformer) })
     }
     
-    // TODO: Remove this in Swift 2.0
-    public func generate() -> IndexingGenerator<Array<T>> {
-        return _elements.generate()
-    }
-    
     public func toArray() -> Array<T> {
         return _elements
     }

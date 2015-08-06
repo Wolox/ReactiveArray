@@ -53,9 +53,6 @@ public enum Operation<T>: CustomDebugStringConvertible {
     
 }
 
-// TODO: Uses constrained protocol extension when moving to Swift 2.0
-// extension Operation: Equatable where T: Equatable {}
-
 public func ==<T: Equatable>(lhs: Operation<T>, rhs: Operation<T>) -> Bool {
     switch (lhs, rhs) {
     case (.Append(let leftValue), .Append(let rightValue)):

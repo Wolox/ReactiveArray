@@ -14,7 +14,7 @@ install_homebrew ()
     echo "    ✔ brew is already installed"
     echo ""
     echo " → Updating homebrew formulas"
-    brew update > /dev/null
+    brew update > /dev/null || brew update > /dev/null
     echo "    ✔ formulas updated"
   else
     command -v ruby >/dev/null 2>&1 || { echo >&2 "Error: Some ruby of version is required to install homebrew. Aborting"; exit 1; }
@@ -112,10 +112,6 @@ bootstrap_carthage ()
   echo " → Bootstrapping Carthage"
   echo ""
   carthage_cmd="time carthage bootstrap --platform ios"
-  if [ ! -z $GITHUB_ACCESS_TOKEN ]
-  then
-    carthage_cmd="$carthage_cmd --github-access-token $GITHUB_ACCESS_TOKEN"
-  fi
 
   if [ "$USE_SSH" == "true" ]
   then
@@ -155,20 +151,6 @@ init_submodules ()
   git submodule foreach --quiet echo_submodule_name
 }
 
-install_carthage ()
-{
-  if [ -z $GITHUB_ACCESS_TOKEN ]
-  then
-    brew_install "carthage"
-  else
-    echo ""
-    echo " → Installing custom version of Carthage"
-    curl -s -o script/Carthage.pkg https://raw.githubusercontent.com/guidomb/ios-scripts/master/artifacts/Carthage.pkg
-    sudo installer -pkg script/Carthage.pkg -target / > /dev/null
-    echo "    ✔ Custom Carthage installed"
-  fi
-}
-
 install_dependencies ()
 {
   echo ""
@@ -196,7 +178,7 @@ main ()
 
   if [ -f Cartfile ]
   then
-    install_carthage
+    brew_install "carthage"
     bootstrap_carthage
   fi
 

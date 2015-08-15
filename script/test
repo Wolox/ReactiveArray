@@ -4,34 +4,44 @@ set -e
 
 source script/.env
 
-# TODO iterate over the list of test targets and test them
-# xcodebuild -list | egrep ".*Tests$"
+schemes ()
+{
+  xcodebuild -list | awk '{if(found) print} /Schemes/{found=1}' | awk '{$1=$1};1'
+}
 
-test_command="set -o pipefail && xcodebuild -scheme $XCODE_SCHEME"
-if [ -z "$XCODE_WORKSPACE" ]
-then
-  test_command="$test_command -project $XCODE_PROJECT"
-else
-  test_command="$test_command -workspace $XCODE_WORKSPACE"
-fi
-test_command="$test_command -sdk iphonesimulator test -configuration Debug"
-if [ ! -z "$CIRCLE_ARTIFACTS" ]
-then
-  test_command="$test_command | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
-fi
-if type bundle > /dev/null && bundle show xcpretty > /dev/null
-then
-  test_command="$test_command | xcpretty -c"
-  if [ ! -z "$CIRCLE_TEST_REPORTS" ]
+run_tests ()
+{
+  test_command="set -o pipefail && xcodebuild -scheme $1"
+  if [ -z "$XCODE_WORKSPACE" ]
   then
-    test_command="$test_command --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml"
+    test_command="$test_command -project $XCODE_PROJECT"
+  else
+    test_command="$test_command -workspace $XCODE_WORKSPACE"
   fi
-fi
+  test_command="$test_command -sdk iphonesimulator test -configuration Debug"
+  if [ ! -z "$CIRCLE_ARTIFACTS" ]
+  then
+    test_command="$test_command | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
+  fi
+  if type bundle > /dev/null && bundle show xcpretty > /dev/null
+  then
+    test_command="$test_command | bundle exec xcpretty -c"
+    if [ ! -z "$CIRCLE_TEST_REPORTS" ]
+    then
+      test_command="$test_command --report junit --output $CIRCLE_TEST_REPORTS/xcode/results.xml"
+    fi
+  fi
 
-echo ""
-echo " → Running tests"
-echo ""
-eval $test_command
+  echo ""
+  echo " → Running tests for scheme '$1'"
+  echo ""
+  eval $test_command
+}
+
+for scheme in $(schemes)
+do
+  run_tests $scheme
+done
 
 if [ -f "$PROJECT_NAME.podspec" ]
 then

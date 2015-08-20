@@ -52,7 +52,7 @@ else
     exit 1
   fi
 
-  for scheme in $(schemes)
+  for scheme in $current_schemes
   do
     build_using_xcodebuild $scheme
   done

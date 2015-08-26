@@ -64,7 +64,13 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     }
     
     public var last: T? {
-        return _elements[_elements.count - 1]
+        let value: T?
+        if _elements.count > 0 {
+            value = _elements[_elements.count - 1]
+        } else {
+            value = Optional.None
+        }
+        return value
     }
     
     public var debugDescription: String {

@@ -541,6 +541,18 @@ class ReactiveArraySpec: QuickSpec {
                 expect(array.last).to(equal(4))
             }
             
+            context("when the array is empty") {
+             
+                beforeEach {
+                    array = ReactiveArray<Int>()
+                }
+                
+                it("returns .None") {
+                    expect(array.last).to(beNil())
+                }
+                
+            }
+            
         }
         
     }

@@ -40,7 +40,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         return  appendCurrentElements |> concat(forwardOperations)
     }
     
-    private let _mutableCount = MutableProperty<Int>(0)
+    private let _mutableCount: MutableProperty<Int>
     public let observableCount:PropertyOf<Int>
     
     public var isEmpty: Bool {
@@ -79,6 +79,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     
     public init(elements:[T]) {
         _elements = elements
+        _mutableCount = MutableProperty(elements.count)
         observableCount = PropertyOf(_mutableCount)
         
         _signal.observe { [unowned self](operation) in

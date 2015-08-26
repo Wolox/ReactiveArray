@@ -396,10 +396,20 @@ class ReactiveArraySpec: QuickSpec {
             
             beforeEach {
                 countBeforeOperation = array.count
-                producer = array.observableCount.producer |> skip(1)
+                producer = array.observableCount.producer
+            }
+            
+            it("returns the initial amount of elements in the array") {
+                producer.start(next: { count in
+                    expect(count).to(equal(countBeforeOperation))
+                })
             }
             
             context("when an insert operation is executed") {
+                
+                beforeEach {
+                    producer = producer |> skip(1)
+                }
                 
                 it("does not update the count") {
                     waitUntil { done in
@@ -421,6 +431,10 @@ class ReactiveArraySpec: QuickSpec {
             
             context("when an append operation is executed") {
                 
+                beforeEach {
+                    producer = producer |> skip(1)
+                }
+                
                 it("updates the count") {
                     waitUntil { done in
                         producer |> start(next: { count in
@@ -435,6 +449,10 @@ class ReactiveArraySpec: QuickSpec {
             }
             
             context("when a delete operation is executed") {
+                
+                beforeEach {
+                    producer = producer |> skip(1)
+                }
                 
                 it("updates the count") {
                     waitUntil { done in

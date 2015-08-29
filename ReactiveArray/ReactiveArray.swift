@@ -98,6 +98,10 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         self.init(elements: [])
     }
     
+	public convenience init(_ elements: T...) {
+		self.init(elements: elements)
+	}
+	
     public subscript(index: Int) -> T {
         get {
             return _elements[index]

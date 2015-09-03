@@ -29,13 +29,25 @@ main ()
     script/bootstrap
     local status=$?
 
-    if [ $status -eq 0 ]; then
+    if [ $status -eq 0 ]
+    then
       echo ""
       echo ""
       echo "####### Build & Test Phase #######"
       echo ""
-      script/test
-      status=$? # TODO This is not working!!!!
+      script/test | tee /tmp/build.test-output.txt
+      status=$?
+      if [ ! $status -eq 0 ]
+      then
+        log_file_path=`cat /tmp/build.test-output.txt | perl -l -ne '/(\/var\/folders.*\/com\.apple\.dt\.XCTest-status.*)\)/ && print $1'`
+        if [ ! -z "$log_file_path" ]
+        then
+          echo ""
+          echo " → The tests have failed. Printing output of log file '$log_file_path'."
+          cat $log_file_path
+          echo ""
+        fi
+      fi
     fi
 
     delete_keychain

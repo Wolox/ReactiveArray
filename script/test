@@ -3,11 +3,7 @@
 set -e
 
 source script/.env
-
-schemes ()
-{
-  xcodebuild -list | awk '{if(found) print} /Schemes/{found=1}' | awk '{$1=$1};1'
-}
+source script/script_hooks/schemes
 
 run_tests ()
 {

@@ -18,12 +18,11 @@ import Foundation
 
 import Foundation
 import ReactiveCocoa
-import Box
 
-public final class ReactiveArray<T>: CollectionType, MutableCollectionType, DebugPrintable {
+public final class ReactiveArray<T>: CollectionType, MutableCollectionType, CustomDebugStringConvertible {
     
-    typealias OperationProducer = SignalProducer<Operation<T>, NoError>
-    typealias OperationSignal = Signal<Operation<T>, NoError>
+    public typealias OperationProducer = SignalProducer<Operation<T>, NoError>
+    public typealias OperationSignal = Signal<Operation<T>, NoError>
     
     private var _elements: Array<T> = []
     
@@ -33,11 +32,10 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     }
     
     public var producer: OperationProducer {
-        let appendCurrentElements = OperationProducer(values:_elements.map { Operation.Append(value: Box($0)) })
-        
+        let appendCurrentElements = OperationProducer(values:_elements.map { Operation.Append(value: $0) })
         let forwardOperations = OperationProducer { (observer, dispoable) in self._signal.observe(observer) }
         
-        return  appendCurrentElements |> concat(forwardOperations)
+        return  appendCurrentElements.concat(forwardOperations)
     }
     
     private let _mutableCount: MutableProperty<Int>
@@ -82,16 +80,18 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
         _mutableCount = MutableProperty(elements.count)
         observableCount = PropertyOf(_mutableCount)
         
-        _signal.observe { [unowned self](operation) in
-            self.updateArray(operation)
+        _signal.observe { [unowned self](event) in
+            if case .Next(let operation) = event {
+                self.updateArray(operation)
+            }
         }
-        
+
     }
     
     public convenience init(producer: OperationProducer) {
         self.init()
         
-        producer |> start(_sink)
+        producer.start(_sink)
     }
     
     public convenience init() {
@@ -108,27 +108,22 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     }
     
     public func append(element: T) {
-        let operation: Operation<T> = .Append(value: Box(element))
-        _sink.put(Event.Next(Box(operation)))
+        let operation: Operation<T> = .Append(value: element)
+        _sink(Event.Next(operation))
     }
     
     public func insert(newElement: T, atIndex index : Int) {
-        let operation: Operation<T> = .Insert(value: Box(newElement), atIndex: index)
-        _sink.put(Event.Next(Box(operation)))
+        let operation: Operation<T> = .Insert(value: newElement, atIndex: index)
+        _sink(Event.Next(operation))
     }
     
     public func removeAtIndex(index:Int) {
         let operation: Operation<T> = .RemoveElement(atIndex: index)
-        _sink.put(Event.Next(Box(operation)))
+        _sink(Event.Next(operation))
     }
     
     public func mirror<U>(transformer: T -> U) -> ReactiveArray<U> {
-        return ReactiveArray<U>(producer: producer |> ReactiveCocoa.map { $0.map(transformer) })
-    }
-    
-    // TODO: Remove this in Swift 2.0
-    public func generate() -> IndexingGenerator<Array<T>> {
-        return _elements.generate()
+        return ReactiveArray<U>(producer: producer.map { $0.map(transformer) })
     }
     
     public func toArray() -> Array<T> {
@@ -137,14 +132,14 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Debu
     
     private func updateArray(operation: Operation<T>) {
         switch operation {
-        case .Append(let boxedValue):
-            _elements.append(boxedValue.value)
-            _mutableCount.put(_elements.count)
-        case .Insert(let boxedValue, let index):
-            _elements[index] = boxedValue.value
+        case .Append(let value):
+            _elements.append(value)
+            _mutableCount.value = _elements.count
+        case .Insert(let value, let index):
+            _elements[index] = value
         case .RemoveElement(let index):
             _elements.removeAtIndex(index)
-            _mutableCount.put(_elements.count)
+            _mutableCount.value = _elements.count
         }
     }
     

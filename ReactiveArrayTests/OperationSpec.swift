@@ -10,7 +10,6 @@ import Quick
 import Nimble
 import ReactiveArray
 import ReactiveCocoa
-import Box
 
 class OperationSpec: QuickSpec {
 
@@ -23,13 +22,13 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Append operation") {
                 
                 beforeEach {
-                    operation = Operation.Append(value: Box(10))
+                    operation = Operation.Append(value: 10)
                 }
                 
                 it("maps the value to be appended") {
                     let mappedOperation = operation.map { $0 * 2 }
                     
-                    let areEqual = mappedOperation == Operation.Append(value: Box(20))
+                    let areEqual = mappedOperation == Operation.Append(value: 20)
                     expect(areEqual).to(beTrue())
                 }
                 
@@ -38,13 +37,13 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Insert operation") {
                 
                 beforeEach {
-                    operation = Operation.Insert(value: Box(10), atIndex: 5)
+                    operation = Operation.Insert(value: 10, atIndex: 5)
                 }
                 
                 it("maps the value to be inserted") {
                     let mappedOperation = operation.map { $0 * 2 }
                     
-                    let areEqual = mappedOperation == Operation.Insert(value: Box(20), atIndex: 5)
+                    let areEqual = mappedOperation == Operation.Insert(value: 20, atIndex: 5)
                     expect(areEqual).to(beTrue())
                 }
                 
@@ -72,7 +71,7 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Append operation") {
                 
                 beforeEach {
-                    operation = Operation.Append(value: Box(10))
+                    operation = Operation.Append(value: 10)
                 }
                 
                 it("returns the appended value") {
@@ -84,7 +83,7 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Insert operation") {
                 
                 beforeEach {
-                    operation = Operation.Insert(value: Box(10), atIndex: 5)
+                    operation = Operation.Insert(value: 10, atIndex: 5)
                 }
                 
                 it("returns the inserted value") {

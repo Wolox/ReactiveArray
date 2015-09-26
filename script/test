@@ -3,11 +3,7 @@
 set -e
 
 source script/.env
-
-schemes ()
-{
-  xcodebuild -list | awk '{if(found) print} /Schemes/{found=1}' | awk '{$1=$1};1'
-}
+source script/script_hooks/schemes
 
 run_tests ()
 {
@@ -18,7 +14,7 @@ run_tests ()
   else
     test_command="$test_command -workspace $XCODE_WORKSPACE"
   fi
-  test_command="$test_command -sdk iphonesimulator test -configuration Debug"
+  test_command="$test_command -sdk iphonesimulator -destination \"platform=iOS Simulator,OS=latest,name=iPhone 6\" clean build test -configuration Debug"
   if [ ! -z "$CIRCLE_ARTIFACTS" ]
   then
     test_command="$test_command | tee $CIRCLE_ARTIFACTS/xcode_raw.log"
@@ -35,6 +31,10 @@ run_tests ()
   echo ""
   echo " → Running tests for scheme '$1'"
   echo ""
+  if [ ! -z "$VERBOSE" ]
+  then
+    echo $test_command
+  fi
   eval $test_command
 }
 

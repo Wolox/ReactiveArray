@@ -18,7 +18,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
     onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
         waitUntil { done in
-            producer.start(next: { operation in
+            producer.startWithNext { operation in
                 switch operation {
                 case .Append(let value):
                     onAppend(value)
@@ -28,7 +28,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
                     onDelete(index)
                 }
                 done()
-            })
+            }
             when()
         }
         
@@ -262,12 +262,12 @@ class ReactiveArraySpec: QuickSpec {
                         array.producer
                             .take(array.count)
                             .collect()
-                            .start(next: { operations in
+                            .startWithNext { operations in
                                 let expectedOperations: [Operation<Int>] = array.map { Operation.Append(value: $0) }
                                 let result = operations == expectedOperations
                                 expect(result).to(beTrue())
                                 done()
-                            })
+                            }
                     }
                 }
                 
@@ -390,19 +390,19 @@ class ReactiveArraySpec: QuickSpec {
             
             beforeEach {
                 countBeforeOperation = array.count
-                producer = array.observableCount.producer.skip(1)
+                producer = array.observableCount.producer
             }
             
             it("returns the initial amount of elements in the array") {
-                producer.start(next: { count in
+                producer.startWithNext { count in
                     expect(count).to(equal(countBeforeOperation))
-                })
+                }
             }
             
             context("when an insert operation is executed") {
                 
                 beforeEach {
-                    producer = producer |> skip(1)
+                    producer = producer.skip(1)
                 }
                 
                 it("does not update the count") {
@@ -410,10 +410,10 @@ class ReactiveArraySpec: QuickSpec {
                         producer
                             .take(1)
                             .collect()
-                            .start(next: { counts in
+                            .startWithNext { counts in
                                 expect(counts).to(equal([countBeforeOperation + 1]))
                                 done()
-                            })
+                            }
                         
                         array.insert(657, atIndex: 1)
                         array.append(656)
@@ -426,15 +426,15 @@ class ReactiveArraySpec: QuickSpec {
             context("when an append operation is executed") {
                 
                 beforeEach {
-                    producer = producer |> skip(1)
+                    producer = producer.skip(1)
                 }
                 
                 it("updates the count") {
                     waitUntil { done in
-                        producer.start(next: { count in
+                        producer.startWithNext { count in
                             expect(count).to(equal(countBeforeOperation + 1))
                             done()
-                        })
+                        }
                         
                         array.append(656)
                     }
@@ -445,15 +445,15 @@ class ReactiveArraySpec: QuickSpec {
             context("when a delete operation is executed") {
                 
                 beforeEach {
-                    producer = producer |> skip(1)
+                    producer = producer.skip(1)
                 }
                 
                 it("updates the count") {
                     waitUntil { done in
-                        producer.start(next: { count in
+                        producer.startWithNext { count in
                             expect(count).to(equal(countBeforeOperation - 1))
                             done()
-                        })
+                        }
                         
                         array.removeAtIndex(1)
                     }

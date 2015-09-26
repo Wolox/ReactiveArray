@@ -80,10 +80,12 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
         _mutableCount = MutableProperty(elements.count)
         observableCount = PropertyOf(_mutableCount)
         
-        _signal.observe { [unowned self](operation) in
-            self.updateArray(operation)
+        _signal.observe { [unowned self](event) in
+            if case .Next(let operation) = event {
+                self.updateArray(operation)
+            }
         }
-        
+
     }
     
     public convenience init(producer: OperationProducer) {

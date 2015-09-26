@@ -9,6 +9,10 @@ build_using_carthage ()
   then
     carthage_cmd="$carthage_cmd --use-ssh"
   fi
+  if [ ! -z "$VERBOSE" ]
+  then
+    echo $carthage_cmd
+  fi
   eval $carthage_cmd
 }
 
@@ -31,6 +35,10 @@ build_using_xcodebuild ()
   echo ""
   echo " → Building scheme '$1'"
   echo ""
+  if [ ! -z "$VERBOSE" ]
+  then
+    echo $build_command
+  fi
   eval $build_command
 }
 

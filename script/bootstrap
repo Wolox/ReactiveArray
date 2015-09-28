@@ -87,7 +87,6 @@ bundle_install ()
            "or try to install the gems globally by running the following command:"
     print_gem_install_cmd
     printf "\033[0m"
-    exit 1
   fi
 }
 
@@ -166,21 +165,6 @@ install_dependencies ()
   fi
 }
 
-install_carthage ()
-{
-  source script/common/carthage
-
-  if type carthage > /dev/null
-  then
-    echo ""
-    echo " → Checking installed version of carthage"
-    echo ""
-    check_carthage_version
-  else
-    force_install_carthage
-  fi
-}
-
 main ()
 {
   source script/.env
@@ -194,7 +178,7 @@ main ()
 
   if [ -f Cartfile ]
   then
-    install_carthage
+    brew_install "carthage"
     bootstrap_carthage
   fi
 

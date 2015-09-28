@@ -4,7 +4,6 @@ set -e
 
 source script/.env
 source script/script_hooks/schemes
-source script/common/carthage
 
 run_tests ()
 {
@@ -38,11 +37,6 @@ run_tests ()
   fi
   eval $test_command
 }
-
-if [ -f Cartfile ]
-then
-  check_carthage_version
-fi
 
 current_schemes=$(schemes)
 if [ -z "$current_schemes" ]

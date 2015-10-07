@@ -49,6 +49,21 @@ class OperationSpec: QuickSpec {
                 
             }
             
+            context("when the operation is an Update operation") {
+                
+                beforeEach {
+                    operation = Operation.Update(value: 10, atIndex: 5)
+                }
+                
+                it("maps the value to be updated") {
+                    let mappedOperation = operation.map { $0 * 2 }
+                    
+                    let areEqual = mappedOperation == Operation.Update(value: 20, atIndex: 5)
+                    expect(areEqual).to(beTrue())
+                }
+                
+            }
+            
             context("when the operation is a Delete operation") {
                 
                 beforeEach {
@@ -87,6 +102,18 @@ class OperationSpec: QuickSpec {
                 }
                 
                 it("returns the inserted value") {
+                    expect(operation.value).to(equal(10))
+                }
+                
+            }
+            
+            context("when the operation is an Update operation") {
+                
+                beforeEach {
+                    operation = Operation.Update(value: 10, atIndex: 5)
+                }
+                
+                it("returns the updated value") {
                     expect(operation.value).to(equal(10))
                 }
                 

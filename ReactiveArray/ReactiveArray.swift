@@ -103,7 +103,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
             return _elements[index]
         }
         set(newValue) {
-            insert(newValue, atIndex: index)
+            update(newValue, atIndex: index)
         }
     }
     
@@ -114,6 +114,11 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     
     public func insert(newElement: T, atIndex index : Int) {
         let operation: Operation<T> = .Insert(value: newElement, atIndex: index)
+        _sink(Event.Next(operation))
+    }
+    
+    public func update(element: T, atIndex index: Int) {
+        let operation: Operation<T> = .Update(value: element, atIndex: index)
         _sink(Event.Next(operation))
     }
     
@@ -136,6 +141,8 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
             _elements.append(value)
             _mutableCount.value = _elements.count
         case .Insert(let value, let index):
+            _elements.insert(value, atIndex: index)
+        case .Update(let value, let index):
             _elements[index] = value
         case .RemoveElement(let index):
             _elements.removeAtIndex(index)

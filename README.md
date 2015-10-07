@@ -57,8 +57,8 @@ array.removeAtIndex(4) // => [5,2,3,4]
 The array can be observed for mutations using the `signal` or `producer` properties. Both `Signal` and `SignalProducer` will emit `Operation` values on observation for any of the mutating
 operations performed to the array.
 
-`Operation` is an enumeration with three cases. One for each
-mutating operation: `Append`, `Insert` and `RemoveElement`
+`Operation` is an enumeration with four cases. One for each
+mutating operation: `Append`, `Insert`, `Update` and `RemoveElement`
 
 #### Using `SignalProducer`
 
@@ -81,8 +81,8 @@ will print the following output:
 .Append(value: 1)
 .Append(value: 2)
 .Append(value: 3)
-.Insert(value: 5, atIndex: 0)
-.Insert(value: 4, atIndex: 1)
+.Update(value: 5, atIndex: 0)
+.Update(value: 4, atIndex: 1)
 .RemoveElement(atIndex:2)
 ```
 
@@ -102,8 +102,8 @@ array.removeAtIndex(2)
 will print the following output:
 
 ```
-.Insert(value: 5, atIndex: 0)
-.Insert(value: 4, atIndex: 1)
+.Update(value: 5, atIndex: 0)
+.Update(value: 4, atIndex: 1)
 .RemoveElement(atIndex:2)
 ```
 
@@ -147,7 +147,7 @@ will print the following output:
 .Append(value: 6)
 .Append(value: 8)
 .Append(value: 10)
-.Insert(value: 12, atIndex: 0)
+.Update(value: 12, atIndex: 0)
 ```
 
 

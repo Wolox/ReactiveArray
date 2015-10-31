@@ -39,7 +39,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     }
     
     private let _mutableCount: MutableProperty<Int>
-    public let observableCount:PropertyOf<Int>
+    public let observableCount:AnyProperty<Int>
     
     public var isEmpty: Bool {
         return _elements.isEmpty
@@ -78,7 +78,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     public init(elements:[T]) {
         _elements = elements
         _mutableCount = MutableProperty(elements.count)
-        observableCount = PropertyOf(_mutableCount)
+        observableCount = AnyProperty(_mutableCount)
         
         _signal.observe { [unowned self](event) in
             if case .Next(let operation) = event {
@@ -109,22 +109,22 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     
     public func append(element: T) {
         let operation: Operation<T> = .Append(value: element)
-        _sink(Event.Next(operation))
+        _sink.sendNext(operation)
     }
     
     public func insert(newElement: T, atIndex index : Int) {
         let operation: Operation<T> = .Insert(value: newElement, atIndex: index)
-        _sink(Event.Next(operation))
+        _sink.sendNext(operation)
     }
     
     public func update(element: T, atIndex index: Int) {
         let operation: Operation<T> = .Update(value: element, atIndex: index)
-        _sink(Event.Next(operation))
+        _sink.sendNext(operation)
     }
     
     public func removeAtIndex(index:Int) {
         let operation: Operation<T> = .RemoveElement(atIndex: index)
-        _sink(Event.Next(operation))
+        _sink.sendNext(operation)
     }
     
     public func mirror<U>(transformer: T -> U) -> ReactiveArray<U> {

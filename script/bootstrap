@@ -12,10 +12,14 @@ install_homebrew ()
   if type brew > /dev/null
   then
     echo "    ✔ brew is already installed"
-    echo ""
-    echo " → Updating homebrew formulas"
-    brew update > /dev/null || brew update > /dev/null
-    echo "    ✔ formulas updated"
+
+    if [ -z "$SKIP_BREW_FORMULAS_UPDATE" ]
+    then
+      echo ""
+      echo " → Updating homebrew formulas"
+      brew update > /dev/null || brew update > /dev/null
+      echo "    ✔ formulas updated"
+    fi
   else
     command -v ruby >/dev/null 2>&1 || { echo >&2 "Error: Some ruby of version is required to install homebrew. Aborting"; exit 1; }
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -87,6 +91,7 @@ bundle_install ()
            "or try to install the gems globally by running the following command:"
     print_gem_install_cmd
     printf "\033[0m"
+    exit 1
   fi
 }
 
@@ -111,7 +116,7 @@ bootstrap_carthage ()
   echo ""
   echo " → Bootstrapping Carthage"
   echo ""
-  carthage_cmd="time carthage bootstrap --platform ios"
+  carthage_cmd="time carthage bootstrap --platform $CARTHAGE_BUILD_PLATFORM"
 
   if [ "$USE_SSH" == "true" ]
   then
@@ -121,6 +126,12 @@ bootstrap_carthage ()
   then
     carthage_cmd="$carthage_cmd --use-submodules --no-build"
   fi
+
+  if [ "$CARTHAGE_NO_USE_BINARIES" == "true" ]
+  then
+    carthage_cmd="$carthage_cmd --no-use-binaries"
+  fi
+
   eval $carthage_cmd
 }
 
@@ -165,6 +176,21 @@ install_dependencies ()
   fi
 }
 
+install_carthage ()
+{
+  source script/common/carthage
+
+  if type carthage > /dev/null
+  then
+    echo ""
+    echo " → Checking installed version of carthage"
+    echo ""
+    check_carthage_version
+  else
+    force_install_carthage
+  fi
+}
+
 main ()
 {
   source script/.env
@@ -178,7 +204,7 @@ main ()
 
   if [ -f Cartfile ]
   then
-    brew_install "carthage"
+    install_carthage
     bootstrap_carthage
   fi
 

@@ -18,7 +18,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
     onUpdate: (T, Int) -> () = { fail("Invalid operation type: .Update(\($0), \($1))") },
     onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
-        waitUntil { done in
+        waitUntil(timeout: 10.0) { done in
             producer.startWithNext { operation in
                 switch operation {
                 case .Append(let value):

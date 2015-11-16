@@ -429,13 +429,13 @@ class ReactiveArraySpec: QuickSpec {
                     producer = producer.skip(1)
                 }
                 
-                it("does not update the count") {
+                it("updates the count") {
                     waitUntil { done in
                         producer
-                            .take(1)
+                            .take(2)
                             .collect()
                             .startWithNext { counts in
-                                expect(counts).to(equal([countBeforeOperation + 2]))
+                                expect(counts).to(equal([countBeforeOperation + 1, countBeforeOperation + 2]))
                                 done()
                             }
                         
@@ -452,7 +452,7 @@ class ReactiveArraySpec: QuickSpec {
                     producer = producer.skip(1)
                 }
                 
-                it("updates the count") {
+                it("does not update the count") {
                     waitUntil { done in
                         array[1] = 656
                         expect(array.count).to(equal(countBeforeOperation))

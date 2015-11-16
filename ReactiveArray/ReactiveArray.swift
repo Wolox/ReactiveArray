@@ -142,6 +142,7 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
             _mutableCount.value = _elements.count
         case .Insert(let value, let index):
             _elements.insert(value, atIndex: index)
+            _mutableCount.value = _elements.count
         case .Update(let value, let index):
             _elements[index] = value
         case .RemoveElement(let index):

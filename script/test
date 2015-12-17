@@ -44,7 +44,7 @@ run_tests ()
   eval $test_command
 }
 
-if [ -f Cartfile ]
+if [ -f Cartfile.resolved ]
 then
   check_carthage_version
 fi

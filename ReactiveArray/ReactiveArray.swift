@@ -123,7 +123,8 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     }
     
     public func removeAtIndex(index:Int) {
-        let operation: Operation<T> = .RemoveElement(atIndex: index)
+        let value = _elements[index]
+        let operation: Operation<T> = .RemoveElement(atIndex: index, oldValue: value)
         _sink.sendNext(operation)
     }
     
@@ -145,10 +146,11 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
             _mutableCount.value = _elements.count
         case .Update(let value, let index):
             _elements[index] = value
-        case .RemoveElement(let index):
+        case .RemoveElement(let index, _):
             _elements.removeAtIndex(index)
             _mutableCount.value = _elements.count
         }
     }
     
 }
+

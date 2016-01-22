@@ -16,7 +16,7 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
     onAppend: T -> () = { fail("Invalid operation type: .Append(\($0))") },
     onInsert: (T, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1))") },
     onUpdate: (T, Int) -> () = { fail("Invalid operation type: .Update(\($0), \($1))") },
-    onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
+    onDelete: (Int, T) -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
         waitUntil(timeout: 10.0) { done in
             producer.startWithNext { operation in
@@ -27,8 +27,8 @@ private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation
                     onInsert(value, index)
                 case .Update(let value, let index):
                     onUpdate(value, index)
-                case .RemoveElement(let index):
-                    onDelete(index)
+                case .RemoveElement(let index, let value):
+                    onDelete(index, value)
                 }
                 done()
             }
@@ -42,7 +42,7 @@ private func waitForOperation<T>(fromSignal signal: Signal<Operation<T>, NoError
     onAppend: T -> () = { fail("Invalid operation type: .Append(\($0))") },
     onInsert: (T, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1))") },
     onUpdate: (T, Int) -> () = { fail("Invalid operation type: .Update(\($0), \($1))") },
-    onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
+    onDelete: (Int, T) -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
     let producer = SignalProducer<Operation<T>, NoError> { (observer, disposable) in signal.observe(observer) }
     waitForOperation(fromProducer: producer, when: when, onAppend: onAppend, onInsert: onInsert, onUpdate: onUpdate, onDelete: onDelete)
@@ -53,7 +53,7 @@ private func waitForOperation<T>(fromArray array: ReactiveArray<T>,
     onAppend: T -> () = { fail("Invalid operation type: .Append(\($0))") },
     onInsert: (T, Int) -> () = { fail("Invalid operation type: .Insert(\($0), \($1))") },
     onUpdate: (T, Int) -> () = { fail("Invalid operation type: .Update(\($0), \($1))") },
-    onDelete: Int -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
+    onDelete: (Int, T) -> () = { fail("Invalid operation type: .Delete(\($0))") }) {
         
     waitForOperation(fromSignal: array.signal, when: when, onAppend: onAppend, onInsert: onInsert, onUpdate: onUpdate, onDelete: onDelete)
 }
@@ -152,8 +152,9 @@ class ReactiveArraySpec: QuickSpec {
                     when: {
                         array.removeAtIndex(1)
                     },
-                    onDelete: { index in
+                    onDelete: { index,value in
                         expect(index).to(equal(1))
+                        expect(value).to(equal(2))
                     }
                 )
             }
@@ -250,8 +251,9 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array.removeAtIndex(1)
                         },
-                        onDelete: { index in
+                        onDelete: { index,value in
                             expect(index).to(equal(1))
+                            expect(value).to(equal(12))
                         }
                     )
                 }
@@ -327,8 +329,9 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             a.removeAtIndex(0)
                         },
-                        onDelete: { index in
+                        onDelete: { index,value in
                             expect(index).to(equal(0))
+                            expect(value).to(equal(1))
                         }
                     )
                 }
@@ -397,8 +400,9 @@ class ReactiveArraySpec: QuickSpec {
                         when: {
                             array.removeAtIndex(1)
                         },
-                        onDelete: { index in
+                        onDelete: { index,value in
                             expect(index).to(equal(1))
+                            expect(value).to(equal(2))
                         }
                     )
                 }

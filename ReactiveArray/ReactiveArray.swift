@@ -18,6 +18,7 @@ import Foundation
 
 import Foundation
 import ReactiveCocoa
+import Result
 
 public final class ReactiveArray<T>: CollectionType, MutableCollectionType, CustomDebugStringConvertible {
     

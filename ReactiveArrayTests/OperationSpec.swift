@@ -67,13 +67,13 @@ class OperationSpec: QuickSpec {
             context("when the operation is a Delete operation") {
                 
                 beforeEach {
-                    operation = Operation.RemoveElement(atIndex: 5)
+                    operation = Operation.RemoveElement(atIndex: 5, oldValue:10)
                 }
                 
-                it("does nothing") {
+                it("maps the old value") {
                     let mappedOperation = operation.map { $0 * 2 }
                     
-                    let areEqual = mappedOperation == operation
+                    let areEqual = mappedOperation == Operation.RemoveElement(atIndex: 5, oldValue: 20)
                     expect(areEqual).to(beTrue())
                 }
                 
@@ -122,11 +122,11 @@ class OperationSpec: QuickSpec {
             context("when the operation is an Remove operation") {
                 
                 beforeEach {
-                    operation = Operation.RemoveElement(atIndex: 5)
+                    operation = Operation.RemoveElement(atIndex: 5, oldValue:10)
                 }
                 
                 it("returns .None") {
-                    expect(operation.value).to(beNil())
+                    expect(operation.value).to(equal(10))
                 }
                 
             }

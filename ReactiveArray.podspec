@@ -15,6 +15,6 @@ Pod::Spec.new do |spec|
   spec.ios.deployment_target = '8.0'
   #spec.osx.deployment_target = '10.9'
 
-  spec.dependency 'ReactiveCocoa', '4.0.0-alpha-3'
+  spec.dependency 'ReactiveCocoa', '~> 4.0'
   spec.framework = "Foundation"
 end

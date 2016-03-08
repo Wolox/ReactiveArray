@@ -89,10 +89,15 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
 
     }
     
+    var disposeBag : [Disposable] = []
     public convenience init(producer: OperationProducer) {
         self.init()
         
-        producer.start(_sink)
+        disposeBag += [producer.start(_sink)]
+    }
+    
+    deinit {
+        for d in disposeBag { d.dispose() }
     }
     
     public convenience init() {

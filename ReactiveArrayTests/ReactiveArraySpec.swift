@@ -10,6 +10,7 @@ import Quick
 import Nimble
 import ReactiveArray
 import ReactiveCocoa
+import Result
 
 private func waitForOperation<T>(fromProducer producer: SignalProducer<Operation<T>, NoError>,
     when: () -> (),

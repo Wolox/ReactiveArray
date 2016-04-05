@@ -84,7 +84,7 @@ public func !=<T: Equatable>(lhs: Operation<T>, rhs: Operation<T>) -> Bool {
 // that when T is equatable it can compare an array of operations.
 public func ==<T: Equatable>(lhs: [Operation<T>], rhs: [Operation<T>]) -> Bool {
     let areEqual: () -> Bool = {
-        for var i = 0; i < lhs.count; i++ {
+        for i in lhs.indices {
             if lhs[i] != rhs[i] {
                 return false
             }

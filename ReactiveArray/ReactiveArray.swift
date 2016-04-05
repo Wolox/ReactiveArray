@@ -153,3 +153,18 @@ public final class ReactiveArray<T>: CollectionType, MutableCollectionType, Cust
     }
     
 }
+
+extension ReactiveArray: ArrayLiteralConvertible {
+
+    public convenience init(arrayLiteral elements: T...) {
+        self.init(elements: elements)
+    }
+
+}
+
+extension ReactiveArray: Equatable {}
+
+public func == <T>(lhs: ReactiveArray<T>, rhs: ReactiveArray<T>) -> Bool {
+    return lhs === rhs
+}
+
